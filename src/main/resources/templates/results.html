@@ -18,18 +18,30 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
+
                     <table>
-                        <tr th:each="search:searchList">
-                            <td th:text="${{search.id}}"></td>
-                            <td th:text="${{search.firstName}}"></td>
-                            <td th:text="${{search.lastName}}"></td>
-                            <td th:text="${{search.lastName}}"></td>
-                            <td th:text="${{search.email}}"></td>
+                        <tr >
+                            <td >ID</td>
+                            <td >First Name</td>
+                            <td >Last Name</td>
+                            <td >User Name</td>
+                            <td >Email</td>
 
 
                         </tr>
 
+                        <div th:if="${searchList!=null}">
+                            <tr th:each="search :${searchList}">
+                                <td th:text="${{search.id}}"></td>
+                                <td th:text="${{search.firstName}}"></td>
+                                <td th:text="${{search.lastName}}"></td>
+                                <td th:text="${{search.username}}"></td>
+                                <td th:text="${{search.email}}"></td>
 
+
+                            </tr>
+
+                        </div>
 
                     </table>
 
