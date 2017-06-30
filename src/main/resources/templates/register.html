@@ -13,7 +13,62 @@
     <div class="main-panel">
         <nav class="navbar navbar-default" th:replace="base::navbar">
         </nav>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-1">
 
+                    </div>
+                    <div class="col-md-7">
+                        <br/>
+                        <h2>Register</h2>
+                        <form action="#" th:action="@{/register}" th:object="${user}" method="post" id="userForm">
+
+                            <div class="form-group">
+                                <label for="select">Select User Type:</label>
+                                <br/>
+                                <select name="huge" class="selectpicker" data-style="btn-info btn-fill btn-block" form="userForm" th:field="*{role}" id="select">
+                                    <!--<option disabled selected> Choose city</option>-->
+
+                                    <option value="recruiter" th:text="${'recruiter'}">Recruit </option>
+                                    <option value="job seeker" th:text="${'job seeker'}">Job </option>
+
+
+
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fname">Enter First Name:</label>
+                                <input type="text" class="form-control" th:field="*{firstName}" id="fname" placeholder="Jill"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="lname">Enter Last Name:</label>
+                                <input type="text" class="form-control" th:field="*{lastName}" id="lname" placeholder="Smith"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Enter Email:</label>
+                                <input type="text" class="form-control" th:field="*{email}" id="email" placeholder="anemail@email.com"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="username">Enter Username:</label>
+                                <input type="text" class="form-control" th:field="*{username}" id="username" placeholder="ConnectUpUser"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Enter Password:</label>
+                                <input type="password" class="form-control" th:field="*{password}" id="password" placeholder="********"/>
+                            </div>
+
+                            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+                        </form>
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
 
         <footer class="footer" th:fragment="base::footer">

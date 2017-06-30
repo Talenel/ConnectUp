@@ -7,23 +7,34 @@
 </head>
 <body>
 <div class="wrapper">
-    <div class="container">
+
         <div class="sidebar" data-background-color="brown" data-active-color="danger" th:replace="base::sidebar">
 
         </div>
         <div class="main-panel">
             <nav class="navbar navbar-default" th:replace="base::navbar">
             </nav>
-            <div class="jumbotron">
-                <h1>ConnectUp!</h1>
-                <p>Join today and professionally connect with businesses and workers from all over the globe!</p>
+
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="jumbotron">
+                            <h1>ConnectUp!</h1>
+                            <p>Join today and professionally connect with businesses and workers from all over the globe!</p>
+                        </div>
+                        <!-- your content here -->
+
+                    </div>
+                </div>
             </div>
+
 
 
             <footer class="footer" th:fragment="base::footer">
             </footer>
+
         </div>
-    </div>
+
 </div>
 </body>
 <th:block th:replace="base::scripts">
