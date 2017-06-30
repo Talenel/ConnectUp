@@ -22,21 +22,21 @@
                     <div class="col-md-7">
                         <br/>
                         <h2>Add a Work Experience</h2>
-                        <form action="#" th:action="@{/addSkill}" th:object="${skill}" method="post" id="skillForm">
+                        <br/>
+                        <h3>Add Duties below.  Hit submit after each duty is complete.  When you are finished adding Duties</h3>
+                        <form action="#" th:action="@{/addDuty}" th:object="${duty}" method="post" id="dutyForm">
 
 
                             <div class="form-group">
-                                <label for="skillName">Enter a Skill (e.g. Data Analysis, Java):</label>
-                                <input type="text" class="form-control" th:field="*{skillName}" id="skillName" placeholder="Java"/>
-                                <span class="text-danger" th:if="${#fields.hasErrors('skillName')}" th:errors="*{skillName}">skillName Error</span>
+                                <label for="duty">Enter a Duty for the Job</label>
+                                <input type="text" class="form-control" th:field="*{duty}" id="duty" placeholder="Data Analysis"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('duty')}" th:errors="*{duty}">duty Error</span>
                             </div>
                             <div class="form-group">
-                                <label for="skillRating">Enter Approximate Rating for Skill:</label>
-                                <input type="text" class="form-control" th:field="*{skillRating}" id="skillRating" placeholder="familiar/intermediate/proficient/expert"/>
-                                <span class="text-danger" th:if="${#fields.hasErrors('skillRating')}" th:errors="*{skillRating}">skillRating Error</span>
+                                <label for="jobId">ID</label>
+                                <input type="hidden" class="form-control" th:field="*{jobId}" id="jobId" placeholder="Java"/>
+
                             </div>
-
-
 
                             <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
                         </form>
@@ -44,6 +44,11 @@
                     <div class="col-md-3">
 
                     </div>
+
+                </div>
+                <div class="row">
+                   <a class="btn btn-primary  btn-fill" href="/addJob"> Next </a>
+
 
                 </div>
             </div>

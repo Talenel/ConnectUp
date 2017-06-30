@@ -26,8 +26,9 @@ public class Education {
     private String schoolName;
 
 
-    @NotNull
-    private Date yearGrad;
+    private String yearGrad;
+//    @NotNull
+//    private Date yearGrad;
 
     @NotNull
     @Size(min=2,max=6)
@@ -66,12 +67,29 @@ public class Education {
     public void setSchoolName(String schoolName) {
         this.schoolName = schoolName;
     }
-
+/*
     public Date getYearGrad() {
         return yearGrad;
     }
 
     public void setYearGrad(Date yearGrad) {
+        this.yearGrad = yearGrad;
+    }
+*/
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getYearGrad() {
+        return yearGrad;
+    }
+
+    public void setYearGrad(String yearGrad) {
         this.yearGrad = yearGrad;
     }
 

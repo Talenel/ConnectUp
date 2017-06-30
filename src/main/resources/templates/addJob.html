@@ -13,7 +13,50 @@
     <div class="main-panel">
         <nav class="navbar navbar-default" th:replace="base::navbar">
         </nav>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-1">
 
+                    </div>
+                    <div class="col-md-7">
+                        <br/>
+                        <h2>Add a Work Experience</h2>
+                        <form action="#" th:action="@{/addJob}" th:object="${job}" method="post" id="jobForm">
+
+
+                            <div class="form-group">
+                                <label for="company">Enter Company:</label>
+                                <input type="text" class="form-control" th:field="*{company}" id="company" placeholder="Boeing"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('company')}" th:errors="*{college}">company Error</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="startDate">Enter Start Date (e.g. May 2000, July 2017):</label>
+                                <input type="text" class="form-control" th:field="*{startDate}" id="startDate" placeholder="May 2017"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}">startDate Error</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="endDate">Enter End Date (e.g. May 2000, July 2017):</label>
+                                <input type="text" class="form-control" th:field="*{endDate}" id="endDate" placeholder="March 2016"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}">endDate Error</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="title">Enter Job Title:</label>
+                                <input type="text" class="form-control" th:field="*{title}" id="title" placeholder="Software Engineer"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title Error</span>
+                            </div>
+
+
+                            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+                        </form>
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
 
         <footer class="footer" th:fragment="base::footer">

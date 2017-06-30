@@ -25,11 +25,16 @@ public class Job {
     @Size(max=50)
     private String company;
 
+    private String startDate;
+
+    private String endDate;
+
+    /*
     @Past
     private Date startDate;
 
     private Date endDate;
-
+*/
     @NotNull
     @Size(max=50)
     private String title;
@@ -62,7 +67,7 @@ public class Job {
     public void setCompany(String company) {
         this.company = company;
     }
-
+/*
     public Date getStartDate() {
         return startDate;
     }
@@ -76,6 +81,23 @@ public class Job {
     }
 
     public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+*/
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 

@@ -13,7 +13,50 @@
     <div class="main-panel">
         <nav class="navbar navbar-default" th:replace="base::navbar">
         </nav>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-1">
 
+                    </div>
+                    <div class="col-md-7">
+                        <br/>
+                        <h2>Add an Educational Experience</h2>
+                        <form action="#" th:action="@{/addEdu}" th:object="${education}" method="post" id="eduForm">
+
+
+                            <div class="form-group">
+                                <label for="college">Enter College:</label>
+                                <input type="text" class="form-control" th:field="*{college}" id="college" placeholder="Columbia University"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('college')}" th:errors="*{college}">College Error</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="yearGrad">Enter Graduation Date (e.g. 2000,2017):</label>
+                                <input type="text" class="form-control" th:field="*{yearGrad}" id="yearGrad" placeholder="2017"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('yearGrad')}" th:errors="*{yearGrad}">Grad Year Error</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="degreeType">Enter Type of Degree (e.g. MS,BS):</label>
+                                <input type="text" class="form-control" th:field="*{degreeType}" id="degreeType" placeholder="MS"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('degreeType')}" th:errors="*{degreeType}">Degree Type Error</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="degreeMajor">Enter Major of Degree:</label>
+                                <input type="text" class="form-control" th:field="*{degreeMajor}" id="degreeMajor" placeholder="Computer Science/CS"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('degreeMajor')}" th:errors="*{degreeMajor}">Degree Major Error</span>
+                            </div>
+
+
+                            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+                        </form>
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
 
         <footer class="footer" th:fragment="base::footer">
