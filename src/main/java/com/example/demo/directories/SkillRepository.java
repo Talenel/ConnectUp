@@ -12,4 +12,6 @@ public interface SkillRepository extends CrudRepository<Skill,Long> {
 
     public List<Skill> findAllBySkillName(String skillName);
 
+    public List<Skill> findAllByUserId(long userId);
+
 }

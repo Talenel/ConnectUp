@@ -10,6 +10,8 @@ import java.util.List;
  */
 public interface EducationRepository extends CrudRepository<Education,Long> {
 
-        public List<Education> findAllBySchoolName(String schoolName);
+    public List<Education> findAllBySchoolName(String schoolName);
 
-        }
+    public List<Education> findAllByUserId(long userId);
+
+}

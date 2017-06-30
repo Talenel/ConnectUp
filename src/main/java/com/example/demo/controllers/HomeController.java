@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 import com.example.demo.models.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,7 +87,7 @@ public class HomeController {
     }
 
     @PostMapping("/addEdu")
-    public String eduSubmit(@Valid Education education, BindingResult bindingResult, Model model) {
+    public String eduSubmit(@Valid Education education, BindingResult bindingResult, Model model, Principal principal) {
 
           
         if (bindingResult.hasErrors()) {
@@ -94,6 +95,8 @@ public class HomeController {
         }
         //Account account =accountRepository.findOneByUserName(principal.getName());
         //transaction.setAcctNum(account.getAcctNum());
+        User user=userRepository.findByUsername(principal.getName());
+        education.setUserId(user.getId());
 
         educationRepository.save(education);
 
@@ -108,7 +111,7 @@ public class HomeController {
     }
 
     @PostMapping("/addJob")
-    public String jobSubmit(@Valid Job job, BindingResult bindingResult, Model model) {
+    public String jobSubmit(@Valid Job job, BindingResult bindingResult, Model model, Principal principal) {
 
           
         if (bindingResult.hasErrors()) {
@@ -120,6 +123,8 @@ public class HomeController {
         }
         //Account account =accountRepository.findOneByUserName(principal.getName());
         //transaction.setAcctNum(account.getAcctNum());
+        User user=userRepository.findByUsername(principal.getName());
+        job.setUserId(user.getId());
 
         jobRepository.save(job);
         List<Job> jobs=jobRepository.findTop10ByTitleOrderByIdDesc(job.getTitle());
@@ -168,14 +173,17 @@ public class HomeController {
     }
 
     @PostMapping("/addSkill")
-    public String skillSubmit(@Valid Skill skill, BindingResult bindingResult, Model model) {
-          
+    public String skillSubmit(@Valid Skill skill, BindingResult bindingResult, Model model, Principal principal) {
+
+
 
         if (bindingResult.hasErrors()) {
             return "addSkill";
         }
         //Account account =accountRepository.findOneByUserName(principal.getName());
         //transaction.setAcctNum(account.getAcctNum());
+        User user=userRepository.findByUsername(principal.getName());
+        skill.setUserId(user.getId());
 
         skillRepository.save(skill);
 
@@ -223,5 +231,36 @@ public class HomeController {
         return "results";
     }
 
+    @RequestMapping("/myresume")
+    public String myResume(Model model, Principal principal)
+    {
+        User user=userRepository.findByUsername(principal.getName());
+        List<Education> edus=educationRepository.findAllByUserId(user.getId());
+        List<Job> jobs=jobRepository.findAllByUserId(user.getId());
+        List<Skill> skills=skillRepository.findAllByUserId(user.getId());
+        ArrayList<String> duties=new ArrayList<>();
+        for(Job job:jobs)
+        {
+            List<Duty> duties2=dutyRepository.findAllByJobId(job.getId());
+            StringBuilder sb=new StringBuilder("<br/>");
+            for(Duty duty:duties2)
+            {
+
+                sb.append("<p>"+duty.getDuty()+"</p></br>");
+
+                ;
+            }
+            duties.add(sb.toString());
+
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("dutiesList", duties);
+        model.addAttribute("jobsList", jobs);
+        model.addAttribute("edusList", edus);
+        model.addAttribute("skillsList", skills);
+
+        return "displayResume";
+
+    }
 
 }

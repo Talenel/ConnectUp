@@ -13,4 +13,6 @@ public interface JobRepository extends CrudRepository<Job,Long> {
     public List<Job> findTop10ByTitleOrderByIdDesc(String title);
 
     public List<Job> findAllByCompany(String company);
+
+    public List<Job> findAllByUserId(long userId);
 }
