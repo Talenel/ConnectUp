@@ -148,10 +148,23 @@
                     <a class="navbar-brand" href="#charts">Template</a>
                 </div>
                 <div class="collapse navbar-collapse">
-                    <form class="navbar-form navbar-left navbar-search-form" role="search">
+                    <form class="navbar-form navbar-left navbar-search-form" action="#" th:action="@{/search}" role="search" id="search" method="post">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                            <input type="text" value="" class="form-control" placeholder="Search..."/>
+                            <input type="text" value="" class="form-control" id="searching" placeholder="Search..."/>
+
+                            <select name="huge" class="selectpicker" data-style="btn-info btn-fill btn-block" form="search" id="select" >
+                                <!--<option disabled selected> Choose city</option>-->
+
+                                <option value="username" th:text="${'Username'}">name </option>
+                                <option value="company" th:text="${'Company'}">company</option>
+                                <option value="college" th:text="${'College'}">college </option>
+                                <option value="skillName" th:text="${'Skill'}">Job </option>
+
+
+
+                            </select>
+                            <input type="submit" value="Submit" />
                         </div>
                     </form>
                     <ul class="nav navbar-nav navbar-right">

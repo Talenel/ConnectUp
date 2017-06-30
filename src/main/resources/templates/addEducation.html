@@ -26,9 +26,9 @@
 
 
                             <div class="form-group">
-                                <label for="college">Enter College:</label>
-                                <input type="text" class="form-control" th:field="*{college}" id="college" placeholder="Columbia University"/>
-                                <span class="text-danger" th:if="${#fields.hasErrors('college')}" th:errors="*{college}">College Error</span>
+                                <label for="schoolName">Enter School Name:</label>
+                                <input type="text" class="form-control" th:field="*{schoolName}" id="schoolName" placeholder="Columbia University"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('schoolName')}" th:errors="*{schoolName}">schoolName Error</span>
                             </div>
                             <div class="form-group">
                                 <label for="yearGrad">Enter Graduation Date (e.g. 2000,2017):</label>

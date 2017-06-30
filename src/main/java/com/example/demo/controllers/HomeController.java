@@ -5,15 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 import com.example.demo.models.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,8 +40,12 @@ public class HomeController {
 
 
     @RequestMapping("/")
-    public String home(){
+    public String home(Model model)
+    {
+
+          
         return "home";
+
     }
 
     @RequestMapping("/login")
@@ -54,14 +56,15 @@ public class HomeController {
     @GetMapping("/register")
     public String registerForm(Model model) {
         model.addAttribute("user", new User());
+          
 
         return "register";
     }
 
     @PostMapping("/register")
-    public String registerSubmit(@Valid User user, BindingResult bindingResult) {
+    public String registerSubmit(@Valid User user, BindingResult bindingResult, Model model) {
 
-
+          
         if (bindingResult.hasErrors()) {
             return "register";
         }
@@ -78,14 +81,14 @@ public class HomeController {
     @GetMapping("/addEdu")
     public String eduForm(Model model) {
         model.addAttribute("education", new Education());
-
+          
         return "addEducation";
     }
 
     @PostMapping("/addEdu")
-    public String eduSubmit(@Valid Education education, BindingResult bindingResult) {
+    public String eduSubmit(@Valid Education education, BindingResult bindingResult, Model model) {
 
-
+          
         if (bindingResult.hasErrors()) {
             return "addEducation";
         }
@@ -100,14 +103,14 @@ public class HomeController {
     @GetMapping("/addJob")
     public String jobForm(Model model) {
         model.addAttribute("job", new Job());
-
+          
         return "addJob";
     }
 
     @PostMapping("/addJob")
-    public String jobSubmit(@Valid Job job, BindingResult bindingResult) {
+    public String jobSubmit(@Valid Job job, BindingResult bindingResult, Model model) {
 
-
+          
         if (bindingResult.hasErrors()) {
             return "addJob";
         }
@@ -122,12 +125,12 @@ public class HomeController {
         List<Job> jobs=jobRepository.findTop10ByTitleOrderByIdDesc(job.getTitle());
         long id=jobs.get(0).getId();
 
-        return "redirect:/addDuties/{"+id+"}";
+        return "redirect:/addDuties/"+id;
     }
     @GetMapping("/addDuty")
     public String dutyForm(Model model) {
         model.addAttribute("duty", new Duty());
-
+          
         return "addDuty";
     }
     @GetMapping("/addDuties/{id}")
@@ -136,15 +139,16 @@ public class HomeController {
         Duty duty=new Duty();
         duty.setJobId(id);
         model.addAttribute("duty", duty);
+          
 
         return "addDuty";
     }
 
 
     @PostMapping("/addDuty")
-    public String dutySubmit(@Valid Duty duty, BindingResult bindingResult) {
+    public String dutySubmit(@Valid Duty duty, BindingResult bindingResult, Model model) {
 
-
+          
         if (bindingResult.hasErrors()) {
             return "addDuty";
         }
@@ -153,19 +157,19 @@ public class HomeController {
 
         dutyRepository.save(duty);
 
-        return "redirect:/addDuties";
+        return "redirect:/addDuties/"+duty.getJobId();
     }
 
     @GetMapping("/addSkill")
     public String skillForm(Model model) {
         model.addAttribute("skill", new Skill());
-
+          
         return "addSkill";
     }
 
     @PostMapping("/addSkill")
-    public String skillSubmit(@Valid Skill skill, BindingResult bindingResult) {
-
+    public String skillSubmit(@Valid Skill skill, BindingResult bindingResult, Model model) {
+          
 
         if (bindingResult.hasErrors()) {
             return "addSkill";
@@ -176,6 +180,47 @@ public class HomeController {
         skillRepository.save(skill);
 
         return "redirect:/addSkill";
+    }
+    @PostMapping("/search")
+    public String searchSubmit(@RequestParam("searching") String searching,@RequestParam("select") String select, Model model) {
+         
+        if(select.equals("username"))
+        {
+            List<User> searches=userRepository.findAllByUsername(searching);
+            model.addAttribute("searchList", searches);
+        }
+        if(select.equals("company"))
+        {
+            List<Job> jobs=jobRepository.findAllByCompany(searching);
+            List<User> searches=new ArrayList<User>();
+            for(Job job:jobs)
+            {
+                searches.add(userRepository.findById(job.getUserId()));
+            }
+            model.addAttribute("searchList", searches);
+        }
+        if(select.equals("college"))
+        {
+            List<Education> edus=educationRepository.findAllBySchoolName(searching);
+            List<User> searches=new ArrayList<User>();
+            for(Education edu:edus)
+            {
+                searches.add(userRepository.findById(edu.getUserId()));
+            }
+            model.addAttribute("searchList", searches);
+        }
+        if(select.equals("skill"))
+        {
+            List<Skill> skills=skillRepository.findAllBySkillName(searching);
+            List<User> searches=new ArrayList<User>();
+            for(Skill skill:skills)
+            {
+                searches.add(userRepository.findById(skill.getUserId()));
+            }
+            model.addAttribute("searchList", searches);
+        }
+
+        return "results";
     }
 
 

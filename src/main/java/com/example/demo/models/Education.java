@@ -31,7 +31,7 @@ public class Education {
 //    private Date yearGrad;
 
     @NotNull
-    @Size(min=2,max=6)
+    @Size(min=2,max=20)
     private String degreeType;
 
     @NotNull
