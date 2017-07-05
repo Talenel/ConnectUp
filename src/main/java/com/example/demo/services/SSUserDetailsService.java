@@ -4,7 +4,7 @@ package com.example.demo.services;
  * Created by student on 6/30/17.
  */
 
-import com.example.demo.directories.UserRepository;
+import com.example.demo.repositories.UserRepository;
 import com.example.demo.models.Role;
 import com.example.demo.models.User;
 import org.slf4j.Logger;

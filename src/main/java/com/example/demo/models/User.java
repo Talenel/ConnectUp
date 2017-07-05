@@ -3,6 +3,7 @@ package com.example.demo.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -45,11 +46,19 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private Collection<Role> roles;
 
     private boolean enabled;
 
-
+    public User(String email,String password,  String firstName, String lastName, boolean enabled, String username, String role) {
+        this.password = password;
+        this.email = email;
+        this.username = username;
+        this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.enabled = enabled;
+    }
 
     public User()
     {
@@ -114,11 +123,11 @@ public class User {
         this.id = id;
     }
 
-    public Set<Role> getRoles() {
+    public Collection<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(Collection<Role> roles) {
         this.roles = roles;
     }
 

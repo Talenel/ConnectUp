@@ -33,8 +33,9 @@
                     </div>
                     <h3>Work Experiences</h3>
                     <div th:each="job:${jobsList}">
-                        <div th:text="${ {job.title} }"></div><br/>
-                        <div th:text="${ {job.company}+', '+{job.startDate}+' - '+{job.endDate} }"></div><br/>
+                        <div th:text="${ {job.title} }"></div>
+                        <div th:text="${ {job.company}+', '+{job.startDate}+' - '+{job.endDate} }"></div>
+                        <div th:text="${ {dutiesList.get(job.id-1)} }"></div>
 
 
                     </div>

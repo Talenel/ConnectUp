@@ -1,6 +1,8 @@
 package com.example.demo.controllers;
 
-import com.example.demo.directories.*;
+import com.example.demo.repositories.*;
+import com.example.demo.services.UserService;
+import com.example.demo.validators.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +41,11 @@ public class HomeController {
     @Autowired
     private SkillRepository skillRepository;
 
+    @Autowired
+    private UserValidator userValidator;
+    @Autowired
+    private UserService userService;
+
 
     @RequestMapping("/")
     public String home(Model model)
@@ -63,19 +70,25 @@ public class HomeController {
     }
 
     @PostMapping("/register")
-    public String registerSubmit(@Valid User user, BindingResult bindingResult, Model model) {
-
-          
-        if (bindingResult.hasErrors()) {
+    public String registerSubmit(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
+        userValidator.validate(user, result);
+        model.addAttribute("user", user);
+        if (result.hasErrors()) {
             return "register";
         }
         //Account account =accountRepository.findOneByUserName(principal.getName());
         //transaction.setAcctNum(account.getAcctNum());
-        user.setEnabled(true);
-        Role role=new Role();
-        role.setRole(user.getRole());
-        roleRepository.save(role);
-        userRepository.save(user);
+        if(user.getRole().equals("recruiter"))
+        {
+            userService.saveRecruiter(user);
+            model.addAttribute("message", "Recruiter Account Successfully Created");
+        }
+        if(user.getRole().equals("job seeker"))
+        {
+            userService.saveJobSeeker(user);
+            model.addAttribute("message", "Job Seeker Account Successfully Created");
+        }
+
 
         return "userHome";
     }
@@ -246,7 +259,7 @@ public class HomeController {
             for(Duty duty:duties2)
             {
 
-                sb.append("<p>"+duty.getDuty()+"</p></br>");
+                sb.append("<p>"+duty.getDutyMessage()+"</p></br>");
 
                 ;
             }
@@ -261,6 +274,12 @@ public class HomeController {
 
         return "displayResume";
 
+    }
+    public UserValidator getUserValidator() {
+        return userValidator;
+    }
+    public void setUserValidator(UserValidator userValidator) {
+        this.userValidator = userValidator;
     }
 
 }

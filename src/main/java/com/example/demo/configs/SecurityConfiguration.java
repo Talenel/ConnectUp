@@ -3,7 +3,7 @@ package com.example.demo.configs;
 /**
  * Created by student on 6/30/17.
  */
-import com.example.demo.directories.UserRepository;
+import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.SSUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +14,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -28,6 +30,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         return new SSUserDetailsService(userRepository);
 
     }
+    @Bean
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder(11);
+    }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -49,7 +56,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsServiceBean());
+        auth
+                .userDetailsService(userDetailsServiceBean())
+                .passwordEncoder(encoder());
 
 
     }

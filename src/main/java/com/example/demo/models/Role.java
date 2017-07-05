@@ -2,8 +2,7 @@ package com.example.demo.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.Set;
-
+import java.util.Collection;
 /**
  * Created by student on 6/28/17.
  */
@@ -15,13 +14,14 @@ public class Role {
     private long id;
 
     @Column(nullable=false)
-    @Size(max=50)
     private String role;
 
     @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
-    private Set<User> users;
+    private Collection<User> users;
 
-
+    public Role(String role) {
+        this.role = role;
+    }
 
     public Role()
     {
@@ -45,11 +45,11 @@ public class Role {
         this.role = role;
     }
 
-    public Set<User> getUsers() {
+    public Collection<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<User> users) {
+    public void setUsers(Collection<User> users) {
         this.users = users;
     }
 

@@ -1,4 +1,4 @@
-package com.example.demo.directories;
+package com.example.demo.repositories;
 
 import com.example.demo.models.Duty;
 import org.springframework.data.repository.CrudRepository;

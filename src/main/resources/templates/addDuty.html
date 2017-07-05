@@ -23,14 +23,14 @@
                         <br/>
                         <h2>Add a Work Experience</h2>
                         <br/>
-                        <h3>Add Duties below.  Hit submit after each duty is complete.  When you are finished adding Duties</h3>
+                        <h3>Add Duties below.  Hit submit after each duty is complete.  When you are finished adding Duties, click next</h3>
                         <form action="#" th:action="@{/addDuty}" th:object="${duty}" method="post" id="dutyForm">
 
 
                             <div class="form-group">
-                                <label for="duty">Enter a Duty for the Job</label>
-                                <input type="text" class="form-control" th:field="*{duty}" id="duty" placeholder="Data Analysis"/>
-                                <span class="text-danger" th:if="${#fields.hasErrors('duty')}" th:errors="*{duty}">duty Error</span>
+                                <label for="dutyMessage">Enter a Duty for the Job</label>
+                                <input type="text" class="form-control" th:field="*{dutyMessage}" id="dutyMessage" placeholder="Data Analysis"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('dutyMessage')}" th:errors="*{dutyMessage}">dutyMessage Error</span>
                             </div>
                             <div class="form-group">
 

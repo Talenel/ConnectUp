@@ -1,5 +1,7 @@
 package com.example.demo.models;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +21,7 @@ public class Duty {
     private long id;
 
     @NotNull
-    private String duty;
+    private String dutyMessage;
 
     public Duty()
     {
@@ -42,11 +44,11 @@ public class Duty {
         this.id = id;
     }
 
-    public String getDuty() {
-        return duty;
+    public String getDutyMessage() {
+        return dutyMessage;
     }
 
-    public void setDuty(String duty) {
-        this.duty = duty;
+    public void setDutyMessage(String dutyMessage) {
+        this.dutyMessage = dutyMessage;
     }
 }

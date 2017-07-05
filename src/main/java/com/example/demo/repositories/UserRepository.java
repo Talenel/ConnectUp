@@ -1,4 +1,4 @@
-package com.example.demo.directories;
+package com.example.demo.repositories;
 
 /**
  * Created by student on 6/30/17.
@@ -16,7 +16,9 @@ import java.util.List;
 public interface UserRepository extends CrudRepository<User,Long> {
 
     public User findByUsername(String username);
-
+    User findByEmail(String email);
+    Long countByEmail(String email);
+    Long countByUsername(String username);
     public List<User> findAllByUsername(String username);
     public User findById(long id);
 }
