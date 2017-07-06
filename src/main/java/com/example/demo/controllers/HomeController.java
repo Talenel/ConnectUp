@@ -27,19 +27,16 @@ public class HomeController {
     private UserRepository userRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
     private EducationRepository educationRepository;
 
     @Autowired
     private JobRepository jobRepository;
 
     @Autowired
-    private DutyRepository dutyRepository;
+    private SkillRepository skillRepository;
 
     @Autowired
-    private SkillRepository skillRepository;
+    private PostingRepository postingRepository;
 
     @Autowired
     private UserValidator userValidator;
@@ -48,11 +45,28 @@ public class HomeController {
 
 
     @RequestMapping("/")
-    public String home(Model model)
+    public String home(Principal principal, Model model)
     {
+        if(principal==null)
+        {
+            return "home";
+        }
+        User user=userRepository.findByUsername(principal.getName());
+        List<Skill> skills=skillRepository.findAllByUserId(user.getId());
+        List<Posting> postings=new ArrayList<>();
+        for(Skill skill:skills)
+        {
+            List<Skill> skills2=skillRepository.findTop2ByUserIdAndSkillNameOrderByPostingIdDesc(0,skill.getSkillName());
+            for(Skill skill2:skills2)
+            {
+                postings.add(postingRepository.findById(skill2.getPostingId()));
+            }
+        }
+        model.addAttribute("notifList",postings);
 
+        return "userHome";
           
-        return "home";
+
 
     }
 
@@ -78,110 +92,42 @@ public class HomeController {
         }
         //Account account =accountRepository.findOneByUserName(principal.getName());
         //transaction.setAcctNum(account.getAcctNum());
-        if(user.getRole().equals("recruiter"))
+        if(user.getRoleName().equals("recruiter"))
         {
             userService.saveRecruiter(user);
             model.addAttribute("message", "Recruiter Account Successfully Created");
         }
-        if(user.getRole().equals("job seeker"))
+        if(user.getRoleName().equals("job seeker"))
         {
             userService.saveJobSeeker(user);
             model.addAttribute("message", "Job Seeker Account Successfully Created");
         }
 
 
-        return "userHome";
-    }
-    @GetMapping("/addEdu")
-    public String eduForm(Model model) {
-        model.addAttribute("education", new Education());
-          
-        return "addEducation";
-    }
-
-    @PostMapping("/addEdu")
-    public String eduSubmit(@Valid Education education, BindingResult bindingResult, Model model, Principal principal) {
-
-          
-        if (bindingResult.hasErrors()) {
-            return "addEducation";
-        }
-        //Account account =accountRepository.findOneByUserName(principal.getName());
-        //transaction.setAcctNum(account.getAcctNum());
-        User user=userRepository.findByUsername(principal.getName());
-        education.setUserId(user.getId());
-
-        educationRepository.save(education);
-
-        return "redirect:/addEdu";
-    }
-
-    @GetMapping("/addJob")
-    public String jobForm(Model model) {
-        model.addAttribute("job", new Job());
-          
-        return "addJob";
-    }
-
-    @PostMapping("/addJob")
-    public String jobSubmit(@Valid Job job, BindingResult bindingResult, Model model, Principal principal) {
-
-          
-        if (bindingResult.hasErrors()) {
-            return "addJob";
-        }
-        if(job.getEndDate().isEmpty())
-        {
-            job.setEndDate("Present");
-        }
-        //Account account =accountRepository.findOneByUserName(principal.getName());
-        //transaction.setAcctNum(account.getAcctNum());
-        User user=userRepository.findByUsername(principal.getName());
-        job.setUserId(user.getId());
-
-        jobRepository.save(job);
-        List<Job> jobs=jobRepository.findTop10ByTitleOrderByIdDesc(job.getTitle());
-        long id=jobs.get(0).getId();
-
-        return "redirect:/addDuties/"+id;
-    }
-    @GetMapping("/addDuty")
-    public String dutyForm(Model model) {
-        model.addAttribute("duty", new Duty());
-          
-        return "addDuty";
-    }
-    @GetMapping("/addDuties/{id}")
-    public String dutyMore(Model model, @PathVariable("id")long id) {
-
-        Duty duty=new Duty();
-        duty.setJobId(id);
-        model.addAttribute("duty", duty);
-          
-
-        return "addDuty";
+        return "home";
     }
 
 
-    @PostMapping("/addDuty")
-    public String dutySubmit(@Valid Duty duty, BindingResult bindingResult, Model model) {
 
-          
-        if (bindingResult.hasErrors()) {
-            return "addDuty";
-        }
-        //Account account =accountRepository.findOneByUserName(principal.getName());
-        //transaction.setAcctNum(account.getAcctNum());
+    @GetMapping("/addSkill/{id}")
+    public String skillPostingForm(Model model, @PathVariable("id")long id) {
+        Skill skill=new Skill();
+        skill.setPostingId(id);
 
-        dutyRepository.save(duty);
+        model.addAttribute("skill", skill);
 
-        return "redirect:/addDuties/"+duty.getJobId();
+        return "addSkill";
     }
+
+
+
 
     @GetMapping("/addSkill")
     public String skillForm(Model model) {
-        model.addAttribute("skill", new Skill());
-          
+        Skill skill=new Skill();
+        skill.setPostingId(-1);
+
+        model.addAttribute("skill", skill);
         return "addSkill";
     }
 
@@ -193,14 +139,17 @@ public class HomeController {
         if (bindingResult.hasErrors()) {
             return "addSkill";
         }
-        //Account account =accountRepository.findOneByUserName(principal.getName());
-        //transaction.setAcctNum(account.getAcctNum());
-        User user=userRepository.findByUsername(principal.getName());
-        skill.setUserId(user.getId());
+        if(skill.getPostingId()<=0) {
+            User user = userRepository.findByUsername(principal.getName());
+            skill.setUserId(user.getId());
+            skillRepository.save(skill);
+            return "redirect:/addSkill";
 
+        }
+        Posting post=postingRepository.findById(skill.getPostingId());
+        post.setSkills(skill.getSkillName()+", "+post.getSkills());
         skillRepository.save(skill);
-
-        return "redirect:/addSkill";
+        return "redirect:/addSkill/"+skill.getPostingId();
     }
     @PostMapping("/search")
     public String searchSubmit(@RequestParam("searching") String searching,@RequestParam("select") String select, Model model) {
@@ -236,7 +185,9 @@ public class HomeController {
             List<User> searches=new ArrayList<User>();
             for(Skill skill:skills)
             {
-                searches.add(userRepository.findById(skill.getUserId()));
+                if(skill.getUserId()>0) {
+                    searches.add(userRepository.findById(skill.getUserId()));
+                }
             }
             model.addAttribute("searchList", searches);
         }
@@ -244,37 +195,6 @@ public class HomeController {
         return "results";
     }
 
-    @RequestMapping("/myresume")
-    public String myResume(Model model, Principal principal)
-    {
-        User user=userRepository.findByUsername(principal.getName());
-        List<Education> edus=educationRepository.findAllByUserId(user.getId());
-        List<Job> jobs=jobRepository.findAllByUserId(user.getId());
-        List<Skill> skills=skillRepository.findAllByUserId(user.getId());
-        ArrayList<String> duties=new ArrayList<>();
-        for(Job job:jobs)
-        {
-            List<Duty> duties2=dutyRepository.findAllByJobId(job.getId());
-            StringBuilder sb=new StringBuilder("<br/>");
-            for(Duty duty:duties2)
-            {
-
-                sb.append("<p>"+duty.getDutyMessage()+"</p></br>");
-
-                ;
-            }
-            duties.add(sb.toString());
-
-        }
-        model.addAttribute("user", user);
-        model.addAttribute("dutiesList", duties);
-        model.addAttribute("jobsList", jobs);
-        model.addAttribute("edusList", edus);
-        model.addAttribute("skillsList", skills);
-
-        return "displayResume";
-
-    }
     public UserValidator getUserValidator() {
         return userValidator;
     }

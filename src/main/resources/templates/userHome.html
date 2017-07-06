@@ -13,7 +13,61 @@
     <div class="main-panel">
         <nav class="navbar navbar-default" th:replace="base::navbar">
         </nav>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="jumbotron">
+                        <h1>Welcome <span sec:authentication="name"></span> !</h1>
 
+                    </div>
+                </div>
+                <div class="row">
+                    <div th:if="${notifList!=null}">
+                        <h1>Notification List</h1>
+                        <br/>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID #</th>
+                                <th>Employer</th>
+                                <th>Title</th>
+                                <th>Salary Range</th>
+                                <th>Description</th>
+                                <th>Skills</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="notif:${notifList}">
+                                <td th:text="${{notif.id}}">
+                                    Number
+                                </td>
+                                <td th:text="${{notif.employer}}">
+                                    Employer
+                                </td>
+                                <td th:text="${{notif.title}}">
+                                    Title
+                                </td>
+                                <td th:text="${ '$'+{notif.minSalary}+' - $'+{notif.maxSalary} }">
+                                    Salary Range
+                                </td>
+                                <td th:text="${{notif.description}}">
+                                    Description
+                                </td>
+                                <td th:text="${{notif.skills}}">
+                                    Skills
+                                </td>
+
+
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
 
         <footer class="footer" th:fragment="base::footer">

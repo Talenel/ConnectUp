@@ -4,7 +4,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * Created by student on 6/28/17.
@@ -34,7 +33,7 @@ public class User {
 
     @Size(max=50)
     @NotNull
-    private String role;
+    private String roleName;
 
     @NotNull
     @Size(min=2,max=100)
@@ -50,11 +49,11 @@ public class User {
 
     private boolean enabled;
 
-    public User(String email,String password,  String firstName, String lastName, boolean enabled, String username, String role) {
+    public User(String email,String password,  String firstName, String lastName, boolean enabled, String username, String roleName) {
         this.password = password;
         this.email = email;
         this.username = username;
-        this.role = role;
+        this.roleName = roleName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.enabled = enabled;
@@ -91,12 +90,12 @@ public class User {
         this.username = username;
     }
 
-    public String getRole() {
-        return role;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     public String getFirstName() {

@@ -22,8 +22,12 @@ public class Skill {
     @NotNull
     private String skillName;
 
-    @NotNull
+
     private String skillRating;
+
+
+
+    private long postingId;
 
     public Skill()
     {
@@ -60,5 +64,13 @@ public class Skill {
 
     public void setSkillRating(String skillRating) {
         this.skillRating = skillRating;
+    }
+
+    public long getPostingId() {
+        return postingId;
+    }
+
+    public void setPostingId(long postingId) {
+        this.postingId = postingId;
     }
 }

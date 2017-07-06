@@ -35,6 +35,11 @@
                                 <input type="text" class="form-control" th:field="*{skillRating}" id="skillRating" placeholder="familiar/intermediate/proficient/expert"/>
                                 <span class="text-danger" th:if="${#fields.hasErrors('skillRating')}" th:errors="*{skillRating}">skillRating Error</span>
                             </div>
+                            <div class="form-group">
+
+                                <input type="hidden" class="form-control"  th:field="*{postingId}" id="postingId" placeholder="id"/>
+
+                            </div>
 
 
 

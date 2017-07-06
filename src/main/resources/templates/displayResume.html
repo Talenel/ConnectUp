@@ -21,7 +21,7 @@
                     <br/>
                     <div th:text="${ {user.firstName}+' '+{user.lastName} }"></div>
                     <br/>
-                    <div th:text="${ {user.email} }"></div>
+                    <div th:text="${{user.email}}"></div>
                     <br/>
                     <br/>
                     <h3>Education</h3>
@@ -35,7 +35,7 @@
                     <div th:each="job:${jobsList}">
                         <div th:text="${ {job.title} }"></div>
                         <div th:text="${ {job.company}+', '+{job.startDate}+' - '+{job.endDate} }"></div>
-                        <div th:text="${ {dutiesList.get(job.id-1)} }"></div>
+                        <div th:utext="${{dutiesList.get(job.id-1)}}"></div>
 
 
                     </div>

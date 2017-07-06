@@ -29,7 +29,7 @@ public class DataLoader implements CommandLineRunner{
 
     @Override
     public void run(String... strings) throws Exception {
-       // if (roleRepository.findByRole("recruiter")!=null)
+        if (roleRepository.findByRole("recruiter")==null)
         {
 
             System.out.println("Loading data . . .");
@@ -39,7 +39,7 @@ public class DataLoader implements CommandLineRunner{
 
             Role jobRole = roleRepository.findByRole("recruiter");
             Role recruitRole = roleRepository.findByRole("jobSeeker");
-
+            /*
             User user = new User("bob@bob.com", "bob", "Bob", "Bobberson", true, "bob", "jobSeeker");
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRoles(Arrays.asList(jobRole));
@@ -49,6 +49,7 @@ public class DataLoader implements CommandLineRunner{
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRoles(Arrays.asList(recruitRole));
             userRepository.save(user);
+            */
         }
     }
 }

@@ -42,6 +42,7 @@
             </a>
         </div>
         <div class="sidebar-wrapper">
+
             <th:block sec:authorize="isAuthenticated()">
                 <div class="user">
                     <div class="photo">
@@ -59,19 +60,19 @@
                         <div class="collapse" id="collapseExample">
                             <ul class="nav">
                                 <li>
-                                    <a href="/myresume">
+                                    <a href="/resume/myresume">
                                         <span class="sidebar-mini">Mr</span>
                                         <span class="sidebar-normal">My Resume</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/addEdu">
+                                    <a href="/resume/addEdu">
                                         <span class="sidebar-mini">Ae</span>
                                         <span class="sidebar-normal">Add Education</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/addJob">
+                                    <a href="/resume/addJob">
                                         <span class="sidebar-mini">Aj</span>
                                         <span class="sidebar-normal">Add Job</span>
                                     </a>
@@ -129,10 +130,35 @@
                                         </a>
                                     </li>
                                 </th:block>
+
                             </ul>
                         </div>
-                    </li>
 
+                    </li>
+                    <th:block sec:authorize="hasAuthority('recruiter')">
+                        <li>
+                            <a href="/posting/addPosting">
+                                <span class="sidebar-mini">JP</span>
+                                <span class="sidebar-normal">Add a job Posting</span>
+
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/">
+                                <span class="sidebar-mini">MP</span>
+                                <span class="sidebar-normal">View My Postings</span>
+                            </a>
+                        </li>
+                    </th:block>
+                    <th:block sec:authorize="isAuthenticated()">
+
+                        <li>
+                            <a href="/">
+                                <i class="ti-shield"></i>
+                                <p>View Job Notifications</p>
+                            </a>
+                        </li>
+                    </th:block>
 
                 </ul>
 
@@ -165,9 +191,10 @@
                                     <!--<option disabled selected> Choose city</option>-->
 
                                     <option value="username" th:text="${'Username'}">name </option>
+                                    <option value="company" th:text="${'Company'}">company</option>
+                                    <option value="college" th:text="${'College'}">college </option>
+
                                     <th:block sec:authorize="hasAuthority('recruiter')">
-                                        <option value="company" th:text="${'Company'}">company</option>
-                                        <option value="college" th:text="${'College'}">college </option>
                                         <option value="skillName" th:text="${'Skill'}">Job </option>
                                     </th:block>
 
