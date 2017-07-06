@@ -147,7 +147,13 @@ public class HomeController {
 
         }
         Posting post=postingRepository.findById(skill.getPostingId());
-        post.setSkills(skill.getSkillName()+", "+post.getSkills());
+        if(post.getSkills()==null)
+        {
+            post.setSkills(skill.getSkillName());
+        }
+        else {
+            post.setSkills(skill.getSkillName() + ", " + post.getSkills());
+        }
         skillRepository.save(skill);
         return "redirect:/addSkill/"+skill.getPostingId();
     }
@@ -190,6 +196,12 @@ public class HomeController {
                 }
             }
             model.addAttribute("searchList", searches);
+        }
+        if(select.equals("JobPostingTitle"))
+        {
+            List<Posting> posts=postingRepository.findAllByTitle(searching);
+
+            model.addAttribute("searchList2", posts);
         }
 
         return "results";

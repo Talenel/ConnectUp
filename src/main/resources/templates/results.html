@@ -19,18 +19,38 @@
             <div class="container-fluid">
                 <div class="row">
 
-                    <table>
-                        <tr >
-                            <td >ID</td>
-                            <td >First Name</td>
-                            <td >Last Name</td>
-                            <td >User Name</td>
-                            <td >Email</td>
+                    <table class="table table-striped">
+                        <div th:if="${searchList!=null}">
+                            <thead>
+                            <tr >
+
+                                <td >ID #</td>
+                                <td >First Name</td>
+                                <td >Last Name</td>
+                                <td >User Name</td>
+                                <td >Email</td>
+                            </tr>
+                            </thead>
+                        </div>
+                        <div th:if="${searchList2!=null}">
+                            <thead>
+                            <tr>
+                                <th>ID #</th>
+                                <th>Employer</th>
+                                <th>Title</th>
+                                <th>Salary Range</th>
+                                <th>Description</th>
+                                <th>Skills</th>
+
+                            </tr>
+                            </thead>
+                        </div>
 
 
-                        </tr>
+
 
                         <div th:if="${searchList!=null}">
+                            <tbody>
                             <tr th:each="search :${searchList}">
                                 <td th:text="${{search.id}}"></td>
                                 <td th:text="${{search.firstName}}"></td>
@@ -40,9 +60,33 @@
 
 
                             </tr>
+                            </tbody>
 
                         </div>
-
+                        <div th:if="${searchList2!=null}">
+                            <tbody>
+                            <tr th:each="notif:${searchList2}">
+                                <td th:text="${{notif.id}}">
+                                    Number
+                                </td>
+                                <td th:text="${{notif.employer}}">
+                                    Employer
+                                </td>
+                                <td th:text="${{notif.title}}">
+                                    Title
+                                </td>
+                                <td th:text="${ '$'+{notif.minSalary}+' - $'+{notif.maxSalary} }">
+                                    Salary Range
+                                </td>
+                                <td th:text="${{notif.description}}">
+                                    Description
+                                </td>
+                                <td th:text="${{notif.skills}}">
+                                    Skills
+                                </td>
+                            </tr>
+                            </tbody>
+                        </div>
                     </table>
 
                 </div>
