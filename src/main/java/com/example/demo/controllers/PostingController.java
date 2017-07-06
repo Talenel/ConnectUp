@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.models.Posting;
+import com.example.demo.models.Skill;
 import com.example.demo.models.User;
 import com.example.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,7 +65,51 @@ public class PostingController {
         return "redirect:/addSkill/"+id;
     }
 
+    @PostMapping("/myposts")
+    public String viewMyPosts(Model model, Principal principal) {
+        User user=userRepository.findByUsername(principal.getName());
+        List<Posting> searches=postingRepository.findAllByUserId(user.getId());
+        model.addAttribute("searchList2", searches);
 
+
+        return "results";
+    }
+
+    @RequestMapping("/viewAllNotifications")
+    public String viewAllNotifs(Principal principal, Model model)
+
+    {
+        User user=userRepository.findByUsername(principal.getName());
+        List<Skill> skills=skillRepository.findAllByUserId(user.getId());
+        List<Posting> postings=new ArrayList<>();
+        for(Skill skill:skills)
+        {
+            List<Skill> skills2=skillRepository.findAllByUserIdAndSkillNameOrderByPostingIdDesc(0,skill.getSkillName());
+            for(Skill skill2:skills2)
+            {
+                if(searchList(postings,skill2)) {
+                    postings.add(postingRepository.findById(skill2.getPostingId()));
+                }
+            }
+        }
+        model.addAttribute("notifList",postings);
+        return "results";
+    }
+
+    public boolean searchList(List<Posting> list, Skill skill)
+    {
+        for(Posting posting:list)
+        {
+            if(posting.getId()==skill.getPostingId())
+            {
+                return false;
+            }
+        }
+
+
+
+        return true;
+    }
 
 
 }
