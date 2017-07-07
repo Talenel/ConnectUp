@@ -81,7 +81,7 @@ public class PostingController {
     {
         User user=userRepository.findByUsername(principal.getName());
         List<Skill> skills=skillRepository.findAllByUserId(user.getId());
-        List<Posting> postings=new ArrayList<>();
+        ArrayList<Posting> postings=new ArrayList<>();
         for(Skill skill:skills)
         {
             List<Skill> skills2=skillRepository.findAllByUserIdAndSkillNameOrderByPostingIdDesc(0,skill.getSkillName());
@@ -92,7 +92,8 @@ public class PostingController {
                 }
             }
         }
-        model.addAttribute("notifList",postings);
+        postings=sortList(postings);
+        model.addAttribute("searchList2",postings);
         return "results";
     }
 
@@ -109,6 +110,74 @@ public class PostingController {
 
 
         return true;
+    }
+
+    public ArrayList<Posting> sortList(ArrayList<Posting> list)
+    {
+        ArrayList<Posting> low = new ArrayList<Posting>();
+        ArrayList<Posting> high= new ArrayList<Posting>();
+        ArrayList<Posting> sorted= new ArrayList<Posting>();
+        int midIndex;
+
+        if (list.size() == 1) {
+            return list;
+        }
+        else
+            {
+                midIndex=list.size()/2;
+                for (int i=0; i<midIndex; i++) {
+                    low.add(list.get(i));
+                }
+
+                //copy the high half of whole into the new arraylist.
+                for (int i=midIndex; i<list.size(); i++) {
+                    high.add(list.get(i));
+                }
+                low=sortList(low);
+                high=sortList(high);
+
+                sorted=mergeList(low,high);
+
+            }
+
+        return sorted;
+    }
+
+    public ArrayList<Posting> mergeList(ArrayList<Posting> low,ArrayList<Posting> high)
+    {
+        int lowIndex=0;
+        int highIndex=0;
+        int totalIndex=0;
+        ArrayList<Posting> sorted= new ArrayList<Posting>();
+        while (lowIndex < low.size() && highIndex < high.size()) {
+            if (low.get(lowIndex).getId()>high.get(highIndex).getId()) {
+                sorted.add(low.get(lowIndex));
+                lowIndex++;
+            } else {
+                sorted.add(high.get(highIndex));
+                highIndex++;
+            }
+        }
+        ArrayList<Posting> rest;
+        int restIndex;
+        if (lowIndex >= low.size()) {
+            // The low ArrayList has been use up...
+            rest = high;
+            restIndex = highIndex;
+        } else {
+            // The high ArrayList has been used up...
+            rest = low;
+            restIndex = lowIndex;
+        }
+
+        // Copy the rest of whichever ArrayList (low or high) was not used up.
+        for (int i=restIndex; i<rest.size(); i++) {
+            sorted.add(rest.get(i));
+        }
+
+
+        return sorted;
+
     }
 
 

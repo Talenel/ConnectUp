@@ -23,6 +23,16 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"/>
     <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'/>
     <link href="../assets/css/themify-icons.css" rel="stylesheet"/>
+    <style>
+
+        .btn.btn-success.btn-fill
+        {
+            position:relative;
+            display:block;
+
+        }
+
+    </style>
 </head>
 
 <body>
@@ -153,7 +163,7 @@
                     <th:block sec:authorize="isAuthenticated()">
 
                         <li>
-                            <a href="/">
+                            <a href="/posting/viewAllNotifications">
                                 <i class="ti-view-list-alt"></i>
                                 <p>View Job Notifications</p>
                             </a>
@@ -184,23 +194,25 @@
                     <th:block sec:authorize="isAuthenticated()">
                         <form class="navbar-form navbar-left navbar-search-form" action="#" th:action="@{/search}" role="search" id="search" method="post">
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                                <input type="text" value="" class="form-control" id="searching" name="searching" placeholder="Search..."/>
+                                <ul class="nav navbar-nav">
+                                    <li><span class="input-group-addon"><i class="fa fa-search"></i></span></li>
+                                    <li><input type="text" value="" class="form-control" id="searching" name="searching" placeholder="Search..."/></li>
 
-                                <select name="select" class="selectpicker" data-style="btn-info btn-fill btn-block" form="search" id="select" >
-                                    <!--<option disabled selected> Choose city</option>-->
+                                    <li><select name="select" class="selectpicker" data-style="btn-info btn-fill btn-block" form="search" id="select" >
+                                        <!--<option disabled selected> Choose city</option>-->
 
-                                    <option value="username" th:text="${'Username'}">name </option>
-                                    <option value="company" th:text="${'Company'}">company</option>
-                                    <option value="college" th:text="${'College'}">college </option>
-                                    <option value="JobPostingTitle" th:text="${'Job Posting Title'}">JobPostingTitle </option>
-                                    <th:block sec:authorize="hasAuthority('recruiter')">
-                                        <option value="skillName" th:text="${'Skill'}">Job </option>
-                                    </th:block>
+                                        <option value="username" th:text="${'Username'}">name </option>
+                                        <option value="company" th:text="${'Company'}">company</option>
+                                        <option value="college" th:text="${'College'}">college </option>
+                                        <option value="JobPostingTitle" th:text="${'Job Posting Title'}">JobPostingTitle </option>
+                                        <th:block sec:authorize="hasAuthority('recruiter')">
+                                            <option value="skillName" th:text="${'Skill'}">Job </option>
+                                        </th:block>
 
 
-                                </select>
-                                <input type="submit" value="Submit" />
+                                    </select></li>
+                                    <li><input class="btn btn-success btn-fill" type="submit" value="Submit" /></li>
+                                </ul>
                             </div>
                         </form>
                     </th:block>

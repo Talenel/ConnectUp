@@ -41,6 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         http
                 .authorizeRequests()
                 .antMatchers("/","/register","/assets/**").permitAll()
+                .antMatchers("/posting/myposts","/posting/addPosting").hasAuthority("recruiter")
                 .anyRequest()
                 .authenticated()
                 .and()
