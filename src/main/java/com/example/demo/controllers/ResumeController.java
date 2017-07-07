@@ -127,12 +127,13 @@ public class ResumeController {
     public String myResume(Model model, Principal principal)
     {
         User user=userRepository.findByUsername(principal.getName());
-        List<Education> edus=educationRepository.findAllByUserId(user.getId());
-        List<Job> jobs=jobRepository.findAllByUserId(user.getId());
-        List<Skill> skills=skillRepository.findAllByUserId(user.getId());
+        List<Education> edus=educationRepository.findTop10ByUserIdOrderByIdDesc(user.getId());
+        List<Job> jobs=jobRepository.findTop10ByUserIdOrderByIdDesc(user.getId());
+        List<Skill> skills=skillRepository.findTop20ByUserIdOrderByIdDesc(user.getId());
         ArrayList<String> duties=new ArrayList<>();
         for(Job job:jobs)
         {
+
             List<Duty> duties2=dutyRepository.findAllByJobId(job.getId());
             StringBuilder sb=new StringBuilder("");
             for(int i=0;i<duties2.size();i++)

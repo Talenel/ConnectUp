@@ -23,16 +23,16 @@
 
                     <h3>Education</h3>
                     <div th:each="edu:${edusList}">
-                        <div th:text="${ {edu.degreeType}+' in '+{edu.degreeMajor} }"></div><br/>
-                        <div th:text="${ {edu.schoolName}+', '+{edu.yearGrad} }"></div><br/>
+                        <div th:text="${ {edu.degreeType}+' in '+{edu.degreeMajor} }"></div>
+                        <div th:text="${ {edu.schoolName}+', '+{edu.yearGrad} }"></div>
                         <br/>
 
                     </div>
                     <h3>Work Experiences</h3>
-                    <div th:each="job:${jobsList}">
+                    <div th:each="job,status:${jobsList}">
                         <div th:text="${{job.title}}"></div>
                         <div th:text="${ {job.company}+', '+{job.startDate}+' - '+{job.endDate} }"></div>
-                        <div th:utext="${{dutiesList.get(job.id-1)}}"></div>
+                        <div th:utext="${{dutiesList.get(status.index)}}"></div>
                         <br/>
                     </div>
                     <h3>Skills</h3>

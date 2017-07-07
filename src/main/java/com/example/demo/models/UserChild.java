@@ -5,6 +5,7 @@ package com.example.demo.models;
  */
 public abstract class UserChild {
 
+
     private long userId;
 
     public long getUserId() {
@@ -14,4 +15,6 @@ public abstract class UserChild {
     public void setUserId(long userId) {
         this.userId = userId;
     }
+
+
 }

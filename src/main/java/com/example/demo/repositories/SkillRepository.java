@@ -17,4 +17,6 @@ public interface SkillRepository extends CrudRepository<Skill,Long> {
     public List<Skill> findTop4ByUserIdAndSkillNameOrderByPostingIdDesc(long userId, String skillName);
     public List<Skill> findAllByUserIdAndSkillNameOrderByPostingIdDesc(long userId, String skillName);
 
+    public List<Skill> findTop20ByUserIdOrderByIdDesc(long userId);
+
 }

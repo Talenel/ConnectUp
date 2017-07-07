@@ -14,4 +14,6 @@ public interface EducationRepository extends CrudRepository<Education,Long> {
 
     public List<Education> findAllByUserId(long userId);
 
+    public List<Education> findTop10ByUserIdOrderByIdDesc(long userId);
+
 }

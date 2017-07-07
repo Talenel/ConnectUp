@@ -92,7 +92,9 @@ public class PostingController {
                 }
             }
         }
-        postings=sortList(postings);
+        if(!postings.isEmpty()) {
+            postings = sortList(postings);
+        }
         model.addAttribute("searchList2",postings);
         return "results";
     }

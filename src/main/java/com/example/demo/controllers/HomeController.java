@@ -64,7 +64,9 @@ public class HomeController {
                 }
             }
         }
-        postings=sortList(postings);
+        if(!postings.isEmpty()) {
+            postings = sortList(postings);
+        }
         model.addAttribute("notifList",postings);
 
         return "userHome";
