@@ -65,7 +65,7 @@ public class PostingController {
         return "redirect:/addSkill/"+id;
     }
 
-    @PostMapping("/myposts")
+    @RequestMapping("/myposts")
     public String viewMyPosts(Model model, Principal principal) {
         User user=userRepository.findByUsername(principal.getName());
         List<Posting> searches=postingRepository.findAllByUserId(user.getId());

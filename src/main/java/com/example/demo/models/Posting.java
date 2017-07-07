@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  * Created by student on 7/5/17.
  */
 @Entity
-public class Posting {
+public class Posting extends UserChild {
 
     private long userId;
 

@@ -13,7 +13,7 @@ import java.util.Date;
  * Created by student on 6/28/17.
  */
 @Entity
-public class Job {
+public class Job extends UserChild {
 
     private long userId;
 

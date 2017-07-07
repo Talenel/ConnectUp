@@ -17,13 +17,10 @@
             <div class="container-fluid">
                 <div class="row">
                     <h2>Resume</h2>
+                    <h5 th:text="${ {user.firstName}+' '+{user.lastName} }"></h5>
+                    <h5 th:text="${{user.email}}"></h5>
                     <br/>
-                    <br/>
-                    <div th:text="${ {user.firstName}+' '+{user.lastName} }"></div>
-                    <br/>
-                    <div th:text="${{user.email}}"></div>
-                    <br/>
-                    <br/>
+
                     <h3>Education</h3>
                     <div th:each="edu:${edusList}">
                         <div th:text="${ {edu.degreeType}+' in '+{edu.degreeMajor} }"></div><br/>
@@ -33,17 +30,14 @@
                     </div>
                     <h3>Work Experiences</h3>
                     <div th:each="job:${jobsList}">
-                        <div th:text="${ {job.title} }"></div>
+                        <div th:text="${{job.title}}"></div>
                         <div th:text="${ {job.company}+', '+{job.startDate}+' - '+{job.endDate} }"></div>
                         <div th:utext="${{dutiesList.get(job.id-1)}}"></div>
-
-
+                        <br/>
                     </div>
                     <h3>Skills</h3>
                     <div th:each="skill:${skillsList}">
                         <div th:text="${ {skill.skillName}+', '+{skill.skillRating} }"></div><br/>
-
-                        <br/>
 
                     </div>
 

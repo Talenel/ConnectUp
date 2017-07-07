@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  * Created by student on 6/28/17.
  */
 @Entity
-public class Skill {
+public class Skill extends UserChild {
 
     private long userId;
 

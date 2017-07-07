@@ -135,12 +135,12 @@ public class ResumeController {
         {
             List<Duty> duties2=dutyRepository.findAllByJobId(job.getId());
             StringBuilder sb=new StringBuilder("");
-            for(Duty duty:duties2)
+            for(int i=0;i<duties2.size();i++)
             {
 
-                sb.append("<span>"+duty.getDutyMessage()+"</span></br>");
+                sb.append("<span>-Duty "+(i+1)+": "+duties2.get(i).getDutyMessage()+"</span></br>");
 
-                ;
+
             }
             duties.add(sb.toString());
 

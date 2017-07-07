@@ -12,7 +12,7 @@ import java.util.Date;
  * Created by student on 6/28/17.
  */
 @Entity
-public class Education {
+public class Education extends UserChild{
 
 
     private long userId;
