@@ -174,7 +174,9 @@ public class HomeController {
             List<User> searches=new ArrayList<User>();
             for(Job job:jobs)
             {
-                searches.add(userRepository.findById(job.getUserId()));
+                if(searchList(searches, job)) {
+                    searches.add(userRepository.findById(job.getUserId()));
+                }
             }
             model.addAttribute("searchList", searches);
         }
@@ -184,7 +186,9 @@ public class HomeController {
             List<User> searches=new ArrayList<User>();
             for(Education edu:edus)
             {
-                searches.add(userRepository.findById(edu.getUserId()));
+                if(searchList(searches, edu)) {
+                    searches.add(userRepository.findById(edu.getUserId()));
+                }
             }
             model.addAttribute("searchList", searches);
         }
@@ -195,7 +199,9 @@ public class HomeController {
             for(Skill skill:skills)
             {
                 if(skill.getUserId()>0) {
-                    searches.add(userRepository.findById(skill.getUserId()));
+                    if(searchList(searches, skill)) {
+                        searches.add(userRepository.findById(skill.getUserId()));
+                    }
                 }
             }
             model.addAttribute("searchList", searches);
@@ -222,6 +228,20 @@ public class HomeController {
         for(Posting posting:list)
         {
             if(posting.getId()==skill.getPostingId())
+            {
+                return false;
+            }
+        }
+
+
+
+        return true;
+    }
+    public boolean searchList(List<User> list, UserChild object)
+    {
+        for(User user:list)
+        {
+            if(user.getId()==object.getUserId())
             {
                 return false;
             }
